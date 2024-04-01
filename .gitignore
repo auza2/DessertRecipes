@@ -1,0 +1,17 @@
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+.DS_Store
+/testApp.xcodeproj/project.xcworkspace/xcuserdata/jamieauza.xcuserdatad/UserInterfaceState.xcuserstate
+*xcworkspace/xcuserdata/*
+
+## User settings
+xcuserdata/
+*xcworkspace/xcuserdata/*
+
+## Xcode 8 and earlier
+*.xcscmblueprint
+*.xccheckout
+
+!*.xcworkspace/contents.xcworkspacedata
