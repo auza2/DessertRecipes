@@ -40,6 +40,6 @@ struct ListCell: View {
 }
 
 #Preview {
-    ListCell(title: "Apam balik", isFavorite: true, imageURLString: "https://www.themealdb.com/images/media/meals/adxcbq1619787919.jpg")
+    ListCell(title: Dessert.sample1.name, isFavorite: true, imageURLString: Dessert.sample1.imageURLString)
         .modelContainer(for: Dessert.self, inMemory: true)
 }
