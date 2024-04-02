@@ -10,12 +10,7 @@ import SwiftData
 
 struct DessertList: View {
     @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Dessert]
-    
-    var desserts = [
-        Dessert.sample1,
-        Dessert.sample2,
-    ]
+    @Query(sort: \Dessert.name) private var desserts: [Dessert]
 
     var body: some View {
         NavigationView {
@@ -26,11 +21,75 @@ struct DessertList: View {
                             .listRowSeparator(.hidden, edges: .all)
                     }
                 }
-            }.navigationTitle("Desserts")
-        }.listStyle(.grouped)
-            .padding(.top, -35)
-            .environment(\.defaultMinListRowHeight, 10)
+            }
+            .navigationTitle("Desserts")
+        }
+        .listStyle(.grouped)
+        .padding(.top, -35)
+        .environment(\.defaultMinListRowHeight, 10)
+        .task {
+            await fetchDesserts()
+        }
+    }
+    
+    func fetchDesserts() async {
+        do {
+            let data = try await SessionManager().perform(DessertsRequest.getDesserts)
+            let desserts = try parseData(data: data)
+            try persistDesserts(desserts: desserts)
+        } catch {
+            // TODO: Figure out Error Scenario UI
+        }
+    }
+    
+    private func parseData(data: Data) throws -> [Dessert] {
+        let json = try JSONSerialization.jsonObject(with: data, options: [])
+        guard let jsonDictionary = json as? [String: Any] else { return [] }
+
+        let meals = jsonDictionary["meals"] as? [Any]
+        var desserts  = [Dessert]()
         
+        for contactDictionary in meals as! [Dictionary<String, AnyObject>] {
+            let id = contactDictionary["idMeal"] as? String ?? ""
+            let name = contactDictionary["strMeal"] as? String ?? ""
+            let strMealThumb = contactDictionary["strMealThumb"] as? String ?? ""
+            
+            let dessert = Dessert(id: id, name: name, imageURLString: strMealThumb)
+            
+            desserts.append(dessert)
+        }
+        
+        return desserts
+    }
+    
+    private func persistDesserts(desserts: [Dessert]) throws {
+        modelContext.autosaveEnabled = false
+        
+        try modelContext.transaction {
+            for fetchedDessert in desserts {
+                let fetchedDessertId = fetchedDessert.id
+                let predicate = #Predicate<Dessert> { dessert in
+                    dessert.id == fetchedDessertId
+                }
+                
+                var descriptor = FetchDescriptor(predicate: predicate)
+                descriptor.fetchLimit = 1
+                
+                // Check if Dessert is a duplicate
+                // if no duplicates found insert to model context
+                do {
+                    let duplicate = try modelContext.fetch(descriptor)
+                    
+                    if(duplicate.count == 0) {
+                        modelContext.insert(fetchedDessert)
+                    }
+                } catch {
+                    modelContext.insert(fetchedDessert)
+                }
+            }
+            
+            try modelContext.save()
+        }
     }
 }
 
