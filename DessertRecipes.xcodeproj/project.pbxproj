@@ -8,12 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		B09F357A2BBCDF11005233E3 /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B09F35792BBCDF11005233E3 /* VideoView.swift */; };
+		B09F357E2BBDF12D005233E3 /* DessertsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B09F357D2BBDF12D005233E3 /* DessertsView.swift */; };
 		B0BB5A8C2BBB547C001B2427 /* DessertRecipesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0BB5A8B2BBB547C001B2427 /* DessertRecipesApp.swift */; };
 		B0BB5A8E2BBB547C001B2427 /* DessertList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0BB5A8D2BBB547C001B2427 /* DessertList.swift */; };
 		B0BB5A922BBB547F001B2427 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0BB5A912BBB547F001B2427 /* Assets.xcassets */; };
 		B0BB5A962BBB547F001B2427 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0BB5A952BBB547F001B2427 /* Preview Assets.xcassets */; };
 		B0BB5A9E2BBB5647001B2427 /* Dessert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0BB5A9D2BBB5647001B2427 /* Dessert.swift */; };
-		B0BB5AA12BBB58AA001B2427 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0BB5AA02BBB58AA001B2427 /* ListCell.swift */; };
+		B0BB5AA12BBB58AA001B2427 /* DessertListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0BB5AA02BBB58AA001B2427 /* DessertListCell.swift */; };
 		B0BB5AA32BBB59BA001B2427 /* CacheAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0BB5AA22BBB59BA001B2427 /* CacheAsyncImage.swift */; };
 		B0BF998E2BBC919200818F05 /* RequestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0BF998D2BBC919200818F05 /* RequestProtocol.swift */; };
 		B0BF99912BBC91CB00818F05 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0BF99902BBC91CB00818F05 /* SessionManager.swift */; };
@@ -25,6 +26,7 @@
 
 /* Begin PBXFileReference section */
 		B09F35792BBCDF11005233E3 /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
+		B09F357D2BBDF12D005233E3 /* DessertsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DessertsView.swift; sourceTree = "<group>"; };
 		B0BB5A882BBB547C001B2427 /* DessertRecipes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DessertRecipes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0BB5A8B2BBB547C001B2427 /* DessertRecipesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DessertRecipesApp.swift; sourceTree = "<group>"; };
 		B0BB5A8D2BBB547C001B2427 /* DessertList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DessertList.swift; sourceTree = "<group>"; };
@@ -32,7 +34,7 @@
 		B0BB5A932BBB547F001B2427 /* DessertRecipes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DessertRecipes.entitlements; sourceTree = "<group>"; };
 		B0BB5A952BBB547F001B2427 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B0BB5A9D2BBB5647001B2427 /* Dessert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dessert.swift; sourceTree = "<group>"; };
-		B0BB5AA02BBB58AA001B2427 /* ListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
+		B0BB5AA02BBB58AA001B2427 /* DessertListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DessertListCell.swift; sourceTree = "<group>"; };
 		B0BB5AA22BBB59BA001B2427 /* CacheAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheAsyncImage.swift; sourceTree = "<group>"; };
 		B0BF998D2BBC919200818F05 /* RequestProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestProtocol.swift; sourceTree = "<group>"; };
 		B0BF99902BBC91CB00818F05 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
@@ -106,8 +108,9 @@
 			isa = PBXGroup;
 			children = (
 				B0BB5A8D2BBB547C001B2427 /* DessertList.swift */,
+				B09F357D2BBDF12D005233E3 /* DessertsView.swift */,
 				B0BF99942BBC981700818F05 /* RecipeDetailView.swift */,
-				B0BB5AA02BBB58AA001B2427 /* ListCell.swift */,
+				B0BB5AA02BBB58AA001B2427 /* DessertListCell.swift */,
 				B0BB5AA22BBB59BA001B2427 /* CacheAsyncImage.swift */,
 				B09F35792BBCDF11005233E3 /* VideoView.swift */,
 			);
@@ -203,13 +206,14 @@
 			files = (
 				B09F357A2BBCDF11005233E3 /* VideoView.swift in Sources */,
 				B0BB5A8E2BBB547C001B2427 /* DessertList.swift in Sources */,
-				B0BB5AA12BBB58AA001B2427 /* ListCell.swift in Sources */,
+				B0BB5AA12BBB58AA001B2427 /* DessertListCell.swift in Sources */,
 				B0BB5A9E2BBB5647001B2427 /* Dessert.swift in Sources */,
 				B0BF998E2BBC919200818F05 /* RequestProtocol.swift in Sources */,
 				B0BB5AA32BBB59BA001B2427 /* CacheAsyncImage.swift in Sources */,
 				B0BB5A8C2BBB547C001B2427 /* DessertRecipesApp.swift in Sources */,
 				B0BF99932BBC91EC00818F05 /* DessertsRequest.swift in Sources */,
 				B0BF99912BBC91CB00818F05 /* SessionManager.swift in Sources */,
+				B09F357E2BBDF12D005233E3 /* DessertsView.swift in Sources */,
 				B0BF99952BBC981700818F05 /* RecipeDetailView.swift in Sources */,
 				B0BF99992BBC9AC300818F05 /* Recipe.swift in Sources */,
 				B0BF999B2BBCB13400818F05 /* Ingredient.swift in Sources */,

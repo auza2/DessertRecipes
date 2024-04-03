@@ -235,7 +235,3 @@ struct RecipeDetailView: View {
         }
     }
 }
-
-#Preview {
-    RecipeDetailView(dessert: Dessert.sample1).modelContainer(for: Dessert.self, inMemory: true)
-}
