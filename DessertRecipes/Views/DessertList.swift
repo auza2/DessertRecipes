@@ -18,6 +18,7 @@ struct DessertList: View {
                 return desserts.filter{$0.isFavorite == true}
             }
         }
+    
     var otherDesserts: [Dessert] {
             get {
                 return desserts.filter{$0.isFavorite == false}
@@ -46,7 +47,7 @@ struct DessertList: View {
             let desserts = try parseData(data: data)
             try persistDesserts(desserts: desserts)
         } catch {
-            // TODO: Figure out Error Scenario UI
+            
         }
     }
     

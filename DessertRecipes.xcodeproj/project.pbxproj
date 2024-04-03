@@ -109,8 +109,8 @@
 			children = (
 				B0BB5A8D2BBB547C001B2427 /* DessertList.swift */,
 				B09F357D2BBDF12D005233E3 /* DessertsView.swift */,
-				B0BF99942BBC981700818F05 /* RecipeDetailView.swift */,
 				B0BB5AA02BBB58AA001B2427 /* DessertListCell.swift */,
+				B0BF99942BBC981700818F05 /* RecipeDetailView.swift */,
 				B0BB5AA22BBB59BA001B2427 /* CacheAsyncImage.swift */,
 				B09F35792BBCDF11005233E3 /* VideoView.swift */,
 			);
