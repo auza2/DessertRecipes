@@ -127,7 +127,21 @@ struct RecipeDetailView: View {
                     }
                 }
             }
-        }.onAppear {
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                if(dessert.isFavorite) {
+                    Button(action: favorite) {
+                        Label("Add Item", systemImage: "star.fill")
+                    }.tint(.yellow)
+                } else {
+                    Button(action: favorite) {
+                        Label("Add Item", systemImage: "star")
+                    }.tint(.yellow)
+                }
+            }
+        }
+        .onAppear {
             if let ingredients = recipe?.ingredients {
                 print("On appear: Ingredient count \(ingredients.count)")
             }
@@ -149,6 +163,15 @@ struct RecipeDetailView: View {
             }
         } catch {
             // TODO: Figure out Error Scenario UI
+        }
+    }
+    
+    func favorite() {
+        dessert.isFavorite = dessert.isFavorite ? false : true
+        do {
+            try modelContext.save()
+        } catch {
+            
         }
     }
     

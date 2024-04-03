@@ -34,7 +34,8 @@ struct ListCell: View {
                 }.frame(width: 50, height: 50)
                 .id(imageURLString)
             }
-            Text(isFavorite ? "⭐️ \(title)" : title ).padding(EdgeInsets(top: 4, leading: 8, bottom: 8, trailing: 0))
+            Text(isFavorite ? "⭐️" : " " )
+            Text(title)
         }
     }
 }
