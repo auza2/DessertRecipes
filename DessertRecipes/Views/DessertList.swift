@@ -11,20 +11,45 @@ import SwiftData
 struct DessertList: View {
     @Environment(\.modelContext) var modelContext
     @Query(sort: \Dessert.name) var desserts: [Dessert]
+    var favorites: [Dessert] {
+            get {
+                return desserts.filter{$0.isFavorite == true}
+            }
+        }
+    var otherDesserts: [Dessert] {
+            get {
+                return desserts.filter{$0.isFavorite == false}
+            }
+        }
     
     var body: some View {
         NavigationView {
             ZStack(alignment: .top) {
                 List {
-                    ForEach(desserts) { dessert in
-                        VStack{
-                            NavigationLink(destination: RecipeDetailView(dessert: dessert)) {
-                                ListCell(title: dessert.name, isFavorite: true, imageURLString: dessert.imageURLString)
+                    Section("Favorites") {
+                        ForEach(favorites) { dessert in
+                            VStack{
+                                NavigationLink(destination: RecipeDetailView(dessert: dessert)) {
+                                    ListCell(title: dessert.name, isFavorite: dessert.isFavorite, imageURLString: dessert.imageURLString)
                                     
+                                }
+                            }
+                            .alignmentGuide(.listRowSeparatorLeading) { viewDimensions in
+                                return 0
                             }
                         }
-                        .alignmentGuide(.listRowSeparatorLeading) { viewDimensions in
-                            return 0
+                    }
+                    Section("Other Desserts") {
+                        ForEach(otherDesserts) { dessert in
+                            VStack{
+                                NavigationLink(destination: RecipeDetailView(dessert: dessert)) {
+                                    ListCell(title: dessert.name, isFavorite: dessert.isFavorite, imageURLString: dessert.imageURLString)
+                                    
+                                }
+                            }
+                            .alignmentGuide(.listRowSeparatorLeading) { viewDimensions in
+                                return 0
+                            }
                         }
                     }
                 }
