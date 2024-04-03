@@ -1,5 +1,5 @@
 //
-//  ListCell.swift
+//  DessertListCell.swift
 //  DessertRecipes
 //
 //  Created by Jamie Auza on 4/1/24.
@@ -7,14 +7,12 @@
 
 import SwiftUI
 
-struct ListCell: View {
-    let title: String
-    let isFavorite: Bool
-    let imageURLString: String
+struct DessertListCell: View {
+    @Bindable var dessert: Dessert
 
     var body: some View {
         HStack(alignment: .center) {
-            if let thumbUrl = URL(string: imageURLString) {
+            if let thumbUrl = URL(string: dessert.imageURLString) {
                 CacheAsyncImage(url: thumbUrl,
                                 scale: 3, transaction: Transaction(animation: .easeIn)) { phase in
                     switch phase {
@@ -31,16 +29,12 @@ struct ListCell: View {
                     @unknown default:
                         EmptyView()
                     }
-                }.frame(width: 50, height: 50)
-                .id(imageURLString)
+                }
+                .frame(width: 50, height: 50)
+                .id(dessert.imageURLString)
             }
-            Text(isFavorite ? "⭐️" : " " )
-            Text(title)
+            Text(dessert.isFavorite ? "⭐️" : " " )
+            Text(dessert.name)
         }
     }
-}
-
-#Preview {
-    ListCell(title: Dessert.sample1.name, isFavorite: true, imageURLString: Dessert.sample1.imageURLString)
-        .modelContainer(for: Dessert.self, inMemory: true)
 }
