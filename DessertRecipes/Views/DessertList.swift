@@ -9,19 +9,21 @@ import SwiftUI
 import SwiftData
 
 struct DessertList: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query(sort: \Dessert.name) private var desserts: [Dessert]
-
+    @Environment(\.modelContext) var modelContext
+    @Query(sort: \Dessert.name) var desserts: [Dessert]
+    
     var body: some View {
         NavigationView {
             ZStack(alignment: .top) {
                 List {
                     ForEach(desserts) { dessert in
-                        ListCell(title: dessert.name, isFavorite: true, imageURLString: dessert.imageURLString)
-                            .listRowSeparator(.hidden, edges: .all)
+                        NavigationLink(destination: RecipeDetailView(dessert: dessert)) {
+                            ListCell(title: dessert.name, isFavorite: true, imageURLString: dessert.imageURLString)
+                        }
                     }
                 }
             }
+           
             .navigationTitle("Desserts")
         }
         .listStyle(.grouped)
@@ -49,10 +51,10 @@ struct DessertList: View {
         let meals = jsonDictionary["meals"] as? [Any]
         var desserts  = [Dessert]()
         
-        for contactDictionary in meals as! [Dictionary<String, AnyObject>] {
-            let id = contactDictionary["idMeal"] as? String ?? ""
-            let name = contactDictionary["strMeal"] as? String ?? ""
-            let strMealThumb = contactDictionary["strMealThumb"] as? String ?? ""
+        for dessertDictionary in meals as! [Dictionary<String, AnyObject>] {
+            let id = dessertDictionary["idMeal"] as? String ?? ""
+            let name = dessertDictionary["strMeal"] as? String ?? ""
+            let strMealThumb = dessertDictionary["strMealThumb"] as? String ?? ""
             
             let dessert = Dessert(id: id, name: name, imageURLString: strMealThumb)
             

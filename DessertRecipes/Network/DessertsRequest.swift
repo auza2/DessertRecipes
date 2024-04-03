@@ -9,15 +9,23 @@ import Foundation
 
 enum DessertsRequest: RequestProtocol {
     case getDesserts
+    case getRecipe(String)
     
     var path: String {
-        "/api/json/v1/1/filter.php"
+        switch self {
+        case .getDesserts:
+            "/api/json/v1/1/filter.php"
+        case .getRecipe:
+            "/api/json/v1/1/lookup.php"
+        }
     }
     
     var urlParams: [String: String?] {
         switch self {
         case .getDesserts:
-            return ["c":"Dessert"]
+            return ["c": "Dessert"]
+        case .getRecipe(let id):
+            return ["i": id]
         }
     }
     
