@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B09F357A2BBCDF11005233E3 /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B09F35792BBCDF11005233E3 /* VideoView.swift */; };
 		B0BB5A8C2BBB547C001B2427 /* DessertRecipesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0BB5A8B2BBB547C001B2427 /* DessertRecipesApp.swift */; };
 		B0BB5A8E2BBB547C001B2427 /* DessertList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0BB5A8D2BBB547C001B2427 /* DessertList.swift */; };
 		B0BB5A922BBB547F001B2427 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0BB5A912BBB547F001B2427 /* Assets.xcassets */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B09F35792BBCDF11005233E3 /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
 		B0BB5A882BBB547C001B2427 /* DessertRecipes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DessertRecipes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0BB5A8B2BBB547C001B2427 /* DessertRecipesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DessertRecipesApp.swift; sourceTree = "<group>"; };
 		B0BB5A8D2BBB547C001B2427 /* DessertList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DessertList.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				B0BF99942BBC981700818F05 /* RecipeDetailView.swift */,
 				B0BB5AA02BBB58AA001B2427 /* ListCell.swift */,
 				B0BB5AA22BBB59BA001B2427 /* CacheAsyncImage.swift */,
+				B09F35792BBCDF11005233E3 /* VideoView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -198,6 +201,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B09F357A2BBCDF11005233E3 /* VideoView.swift in Sources */,
 				B0BB5A8E2BBB547C001B2427 /* DessertList.swift in Sources */,
 				B0BB5AA12BBB58AA001B2427 /* ListCell.swift in Sources */,
 				B0BB5A9E2BBB5647001B2427 /* Dessert.swift in Sources */,

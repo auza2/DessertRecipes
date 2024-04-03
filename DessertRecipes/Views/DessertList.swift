@@ -17,13 +17,18 @@ struct DessertList: View {
             ZStack(alignment: .top) {
                 List {
                     ForEach(desserts) { dessert in
-                        NavigationLink(destination: RecipeDetailView(dessert: dessert)) {
-                            ListCell(title: dessert.name, isFavorite: true, imageURLString: dessert.imageURLString)
+                        VStack{
+                            NavigationLink(destination: RecipeDetailView(dessert: dessert)) {
+                                ListCell(title: dessert.name, isFavorite: true, imageURLString: dessert.imageURLString)
+                                    
+                            }
+                        }
+                        .alignmentGuide(.listRowSeparatorLeading) { viewDimensions in
+                            return 0
                         }
                     }
                 }
             }
-           
             .navigationTitle("Desserts")
         }
         .listStyle(.grouped)
