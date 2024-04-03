@@ -8,28 +8,6 @@
 import SwiftUI
 import SwiftData
 
-extension Text {
-    func linkStyle() -> some View {
-        self
-            .font(.system(size: 12))
-            .fontWeight(.bold)
-            .foregroundStyle(Color.init(red: 94/255, green: 108/255, blue: 226/255))
-    }
-    
-    func italicsStyle() -> some View {
-        self
-            .font(.system(size: 12))
-            .foregroundStyle(Color.init(red: 144/255, green: 144/255, blue: 144/255))
-            .italic()
-    }
-    
-    func sectionHeaderStyle() -> some View {
-        self
-            .font(.system(size: 18))
-            .fontWeight(.bold)
-    }
-}
-
 struct RecipeDetailView: View {
     @Environment(\.modelContext) var modelContext
     @Bindable var dessert: Dessert
@@ -81,7 +59,9 @@ struct RecipeDetailView: View {
                     }
                     
                     VStack(alignment: .leading) {
-                        Text("Link to Source").linkStyle()
+                        if let sourceURLString = recipe.sourceURLString {
+                            Link("Link to Source", destination: URL(string: sourceURLString)!)
+                        }
                         if let tags = recipe.tags {
                             Text("Tags: \(tags)").italicsStyle()
                         }
@@ -94,10 +74,8 @@ struct RecipeDetailView: View {
                         .sectionHeaderStyle()
                     if let ingredients = recipe.ingredients {
                         ForEach(ingredients) { ingredient in
-                            Text("\(ingredient.measurement) \(ingredient.name)")
-                                .font(.system(size: 12))
+                            IngredientListCell(isChecked: false, ingredient: ingredient)
                                 .listRowSeparator(.hidden)
-                                
                         }
                     }
                     
@@ -186,6 +164,7 @@ struct RecipeDetailView: View {
             let cuisine = recipeDictionary["strArea"] as? String ?? ""
             let tags = recipeDictionary["strTags"] as? String
             let youtubeURL = recipeDictionary["strYoutube"] as? String
+            let strSource = recipeDictionary["strSource"] as? String
             
             var videoId: String?
             if let youtubeURL = youtubeURL {
@@ -193,7 +172,7 @@ struct RecipeDetailView: View {
             }
             
             let ingredients = try parseIngredients(recipeDictionary: recipeDictionary)
-            let fetchedRecipe = Recipe(mealId: id, name: name, imageURLString: strMealThumb, instructions: instructions, tags: tags, cuisine: cuisine, ingredients: ingredients, videoId: videoId)
+            let fetchedRecipe = Recipe(mealId: id, name: name, imageURLString: strMealThumb, instructions: instructions, tags: tags, cuisine: cuisine, ingredients: ingredients, videoId: videoId, sourceURLString: strSource)
 
             return fetchedRecipe
         }
