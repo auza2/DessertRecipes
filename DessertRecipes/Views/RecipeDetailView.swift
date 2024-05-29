@@ -157,8 +157,8 @@ struct RecipeDetailView: View {
         
         if let recipe = recipeResponse.recipe.first {
             recipe.ingredients = (1...20).compactMap({ i in
-                guard let ingredient = recipe[keyPath: \Recipe[strMeasure: i]],
-                      let measure = recipe[keyPath: \Recipe[strIngredient: i]],
+                guard let ingredient = recipe[keyPath: \Recipe[strIngredient: i]],
+                      let measure = recipe[keyPath: \Recipe[strMeasure: i]],
                         !ingredient.isEmpty, !measure.isEmpty else { return nil}
 
                     return Ingredient(name: ingredient, measurement: measure)
