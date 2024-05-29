@@ -162,7 +162,7 @@ struct RecipeDetailView: View {
                 try persistRecipe(recipe: fetchedRecipe)
             }
         } catch {
-            // TODO: Figure out Error Scenario UI
+            print("Error occurred")
         }
     }
     
@@ -171,61 +171,24 @@ struct RecipeDetailView: View {
         do {
             try modelContext.save()
         } catch {
-            
+            print("Error occurred")
         }
     }
     
     private func parseRecipe(data: Data) throws -> Recipe? {
-        let json = try JSONSerialization.jsonObject(with: data, options: [])
-        guard let jsonDictionary = json as? [String: Any], let meals = jsonDictionary["meals"] as? [Any] else { return nil }
+        let recipeResponse = try! JSONDecoder().decode(RecipeResponse.self, from: data)
+        
+        if let recipe = recipeResponse.recipe.first {
+            recipe.ingredients = (1...20).compactMap({ i in
+                guard let ingredient = recipe[keyPath: \Recipe[strMeasure: i]],
+                      let measure = recipe[keyPath: \Recipe[strIngredient: i]],
+                        !ingredient.isEmpty, !measure.isEmpty else { return nil}
 
-        for recipeDictionary in meals as! [Dictionary<String, AnyObject>] {
-            let id = recipeDictionary["idMeal"] as? String ?? ""
-            let name = recipeDictionary["strMeal"] as? String ?? ""
-            let strMealThumb = recipeDictionary["strMealThumb"] as? String ?? ""
-            let instructions = recipeDictionary["strInstructions"] as? String ?? ""
-            let cuisine = recipeDictionary["strArea"] as? String ?? ""
-            let tags = recipeDictionary["strTags"] as? String
-            let youtubeURL = recipeDictionary["strYoutube"] as? String
-            
-            var videoId: String?
-            if let youtubeURL = youtubeURL {
-                videoId = youtubeURL.components(separatedBy: "v=")[1]
-            }
-            
-            let ingredients = try parseIngredients(recipeDictionary: recipeDictionary)
-            let fetchedRecipe = Recipe(mealId: id, name: name, imageURLString: strMealThumb, instructions: instructions, tags: tags, cuisine: cuisine, ingredients: ingredients, videoId: videoId)
-
-            return fetchedRecipe
+                    return Ingredient(name: ingredient, measurement: measure)
+            })
         }
         
-        return nil
-    }
-    
-    private func parseIngredients(recipeDictionary: [String : AnyObject]) throws -> [Ingredient] {
-        var ingredients = [Ingredient]()
-        modelContext.autosaveEnabled = false
-        
-        var ingredientIndex = 1
-        
-        while(true) {
-            if let ingredient = recipeDictionary["strIngredient\(ingredientIndex)"] as? String,  let measurement = recipeDictionary["strMeasure\(ingredientIndex)"] as? String {
-                let ingredientString = ingredient.trimmingCharacters(in: .whitespacesAndNewlines)
-                let measurementString = measurement.trimmingCharacters(in: .whitespacesAndNewlines)
-                
-                if !ingredientString.isEmpty && !measurementString.isEmpty {
-                    let ingredient = Ingredient(name: ingredientString, measurement: measurementString)
-                    ingredients.append(ingredient)
-                    modelContext.insert(ingredient)
-                }
-                
-                ingredientIndex += 1
-            } else {
-                break
-            }
-        }
-        
-        return ingredients
+        return recipeResponse.recipe.first
     }
     
     private func persistRecipe(recipe: Recipe) throws {
