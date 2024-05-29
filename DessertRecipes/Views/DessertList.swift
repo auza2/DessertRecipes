@@ -11,11 +11,14 @@ import SwiftData
 struct DessertList: View {
     @Environment(\.modelContext) var modelContext
     @Query(sort: \Dessert.name) var desserts: [Dessert]
+    @State private var searchText = ""
+    
     var favorites: [Dessert] {
             get {
                 return desserts.filter{$0.isFavorite == true}
             }
         }
+    
     var otherDesserts: [Dessert] {
             get {
                 return desserts.filter{$0.isFavorite == false}
@@ -25,36 +28,10 @@ struct DessertList: View {
     var body: some View {
         NavigationView {
             ZStack(alignment: .top) {
-                List {
-                    Section("Favorites") {
-                        ForEach(favorites) { dessert in
-                            VStack{
-                                NavigationLink(destination: RecipeDetailView(dessert: dessert)) {
-                                    ListCell(title: dessert.name, isFavorite: dessert.isFavorite, imageURLString: dessert.imageURLString)
-                                    
-                                }
-                            }
-                            .alignmentGuide(.listRowSeparatorLeading) { viewDimensions in
-                                return 0
-                            }
-                        }
-                    }
-                    Section("Other Desserts") {
-                        ForEach(otherDesserts) { dessert in
-                            VStack{
-                                NavigationLink(destination: RecipeDetailView(dessert: dessert)) {
-                                    ListCell(title: dessert.name, isFavorite: dessert.isFavorite, imageURLString: dessert.imageURLString)
-                                    
-                                }
-                            }
-                            .alignmentGuide(.listRowSeparatorLeading) { viewDimensions in
-                                return 0
-                            }
-                        }
-                    }
-                }
+                DessertsView(searchString: searchText)
             }
             .navigationTitle("Desserts")
+            .searchable(text: $searchText)
         }
         .listStyle(.grouped)
         .padding(.top, -35)
@@ -70,7 +47,7 @@ struct DessertList: View {
             let desserts = try parseData(data: data)
             try persistDesserts(desserts: desserts)
         } catch {
-            // TODO: Figure out Error Scenario UI
+            
         }
     }
     
@@ -109,9 +86,4 @@ struct DessertList: View {
             try modelContext.save()
         }
     }
-}
-
-#Preview {
-    DessertList()
-        .modelContainer(for: Dessert.self, inMemory: true)
 }

@@ -59,46 +59,30 @@ struct RecipeDetailView: View {
                     }
                     
                     VStack(alignment: .leading) {
-                        Text("Link to Source")
-                            .font(.system(size: 12))
-                            .fontWeight(.bold)
-                            .foregroundStyle(Color.init(red: 94/255, green: 108/255, blue: 226/255))
-                        
-                        
-                        
-                        if let tags = recipe.tags {
-                            Text("Tags: \(tags)")
-                                .font(.system(size: 12))
-                                .foregroundStyle(Color.init(red: 144/255, green: 144/255, blue: 144/255))
-                                .italic()
+                        if let sourceURLString = recipe.sourceURLString {
+                            Link("Link to Source", destination: URL(string: sourceURLString)!)
                         }
-                        
-                        Text("Cuisine: \(recipe.cuisine)")
-                            .font(.system(size: 12))
-                            .foregroundStyle(Color.init(red: 144/255, green: 144/255, blue: 144/255))
-                            .italic()
-                        
+                        if let tags = recipe.tags {
+                            Text("Tags: \(tags)").italicsStyle()
+                        }
+                        Text("Cuisine: \(recipe.cuisine)").italicsStyle()
                     }.listRowSeparator(.hidden)
                     
                     fullDivider
                     
                     Text("Ingredients")
-                        .font(.system(size: 18))
-                        .fontWeight(.bold)
+                        .sectionHeaderStyle()
                     if let ingredients = recipe.ingredients {
                         ForEach(ingredients) { ingredient in
-                            Text("\(ingredient.measurement) \(ingredient.name)")
-                                .font(.system(size: 12))
+                            IngredientListCell(isChecked: false, ingredient: ingredient)
                                 .listRowSeparator(.hidden)
-                                
                         }
                     }
                     
                     fullDivider
                     
                     Text("Instructions")
-                        .font(.system(size: 18))
-                        .fontWeight(.bold)
+                        .sectionHeaderStyle()
                     Text(recipe.instructions)
                         .font(.system(size: 12))
                         .listRowSeparator(.hidden)
@@ -107,9 +91,7 @@ struct RecipeDetailView: View {
                     
                     if let videoId = recipe.videoId {
                         Text("Video")
-                            .font(.system(size: 18))
-                            .fontWeight(.bold)
-                            .listRowSeparator(.hidden)
+                            .sectionHeaderStyle()
                         
                         VideoView(videoId: videoId)
                             .frame(minWidth: 0, minHeight: UIScreen.main.bounds.height*0.3)
@@ -139,11 +121,6 @@ struct RecipeDetailView: View {
                         Label("Add Item", systemImage: "star")
                     }.tint(.yellow)
                 }
-            }
-        }
-        .onAppear {
-            if let ingredients = recipe?.ingredients {
-                print("On appear: Ingredient count \(ingredients.count)")
             }
         }
         .task {
@@ -197,8 +174,4 @@ struct RecipeDetailView: View {
             try modelContext.save()
         }
     }
-}
-
-#Preview {
-    RecipeDetailView(dessert: Dessert.sample1).modelContainer(for: Dessert.self, inMemory: true)
 }
