@@ -17,7 +17,6 @@ class Recipe: Decodable {
     var tags: String?
     var cuisine: String
     var ingredients: [Ingredient]?
-    var ingredientStrings: [String] = []
     var videoId: String?
     var sourceURLString: String?
     
