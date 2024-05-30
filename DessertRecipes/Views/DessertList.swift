@@ -52,23 +52,9 @@ struct DessertList: View {
     }
     
     private func parseData(data: Data) throws -> [Dessert] {
-        let json = try JSONSerialization.jsonObject(with: data, options: [])
-        guard let jsonDictionary = json as? [String: Any] else { return [] }
-
-        let meals = jsonDictionary["meals"] as? [Any]
-        var desserts  = [Dessert]()
+        let dessertResponse = try! JSONDecoder().decode(DessertResponse.self, from: data)
         
-        for dessertDictionary in meals as! [Dictionary<String, AnyObject>] {
-            let id = dessertDictionary["idMeal"] as? String ?? ""
-            let name = dessertDictionary["strMeal"] as? String ?? ""
-            let strMealThumb = dessertDictionary["strMealThumb"] as? String ?? ""
-            
-            let dessert = Dessert(id: id, name: name, imageURLString: strMealThumb)
-            
-            desserts.append(dessert)
-        }
-        
-        return desserts
+        return dessertResponse.desserts
     }
     
     private func persistDesserts(desserts: [Dessert]) throws {
