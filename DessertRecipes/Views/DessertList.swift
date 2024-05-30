@@ -52,9 +52,9 @@ struct DessertList: View {
     }
     
     private func parseData(data: Data) throws -> [Dessert] {
-        let myResponse = try! JSONDecoder().decode(DessertResponse.self, from: data)
+        let dessertResponse = try! JSONDecoder().decode(DessertResponse.self, from: data)
         
-        return myResponse.desserts
+        return dessertResponse.desserts
     }
     
     private func persistDesserts(desserts: [Dessert]) throws {
