@@ -111,14 +111,26 @@ RESTful API:
 - Protocol Oriented Programming
 
 ## Features
-### Dessert Recipe List with Favortes Section
+### Dessert Recipe List
 <img src="https://github.com/auza2/DessertRecipes/assets/17304405/5d82ff1d-9443-4f60-8722-00517a3f625b" width="200" align="left">
 
-This screen calls the endpoint and gathers all of the Dessert objects and uses the Coable protocol to change the responses to a data object called Dessert which we then present on the list. Each list item displays the title and an image which is loaded on the screen asynchronously since we need to call an endpoint to get the image.
+#### Asynchronous API Calls
+- I used the **Codable** protocol to convert the API response into the Dessert data model and are then **persisted** in the data context using **Swift Data**
+- Each list item displays the title and an image, which is loaded **asynchronously** using the CacheAsyncImage class with URLSession.
+- **Images are cached in memory** using NSCache and stored in a dictionary, with the image URL as the key and the image as the value. This approach optimizes performance and reduces repeated network requests.
 
-I created a custom ui that holds the image of each Dessert object in a dictionary where the key is the URL of the Dessert image object so that on each call look up we would not need to call the API again and each image is persisted in memory
+#### Favortes Section
+- I implemented a Favorites functionality that splits the list into two sections which is implemented using two Queries that filter which Desserts are favorited and which are not and also sort the Desserts by name alphabetically.
+- Each favorited item is marked with a yellow star, which is also displayed in the Detail View when a Dessert is favorited.
 
-In addition, I created a Favorites functionality where the list would be split into two sections and each cell in that is favorited has a yellow star that displays if the Dessert is favorited in the Detail View
+<br clear="left"/>
+
+
+<img src="https://github.com/auza2/DessertRecipes/assets/17304405/96ff5fee-34a2-4d05-bae8-74beee24e1bd" width="200" align="left">
+
+#### Search Functionality
+
+I wanted to create a search functionality so that users would be able to search through all of the Desserts on the Dessert List and the two parts of the list have a filter on each one.
 <br clear="left"/>
 
 ### Recipe Detail View
@@ -142,8 +154,4 @@ This was tricky since there had to be a decision on whether on not to use the Co
 
 <br clear="left"/>
 
-### Search Functionality
-<img src="https://github.com/auza2/DessertRecipes/assets/17304405/96ff5fee-34a2-4d05-bae8-74beee24e1bd" width="200" align="left">
 
-I wanted to create a search functionality so that users would be able to search through all of the Desserts on the Dessert List and the two parts of the list have a filter on each one.
-<br clear="left"/>
