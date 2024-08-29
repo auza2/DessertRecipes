@@ -1,11 +1,10 @@
 # Dessert Recipes
-This app makes an API call to the end point https://themealdb.com/api/json/v1/1/filter.php?c=Dessert to fetch a list of desserts and present them on a list with along with a thumbnail image. 
-A user can then tap on the list item and another call to endpoint https://themealdb.com/api/json/v1/1/lookup.php?i=MEAL_ID where MEAL_ID is the id of the dessert.
-Once the call has finished successfully, the user will be navigated to a list detail view which shows an image, ingredients list, instructions, and possibly a youtube video.
+
+The app makes an API call to the endpoint https://themealdb.com/api/json/v1/1/filter.php?c=Dessert to retrieve a list of desserts, which are then displayed in a list with thumbnail images. When a user taps on a dessert, another API call is made to https://themealdb.com/api/json/v1/1/lookup.php?i=MEAL_ID, where MEAL_ID is the ID of the selected dessert. Upon a successful response, the user is navigated to a detail view showing the dessert's image, ingredients list, instructions, and, if available, a YouTube video.
 
 #### Example API Responses:
 
-/c=Dessert
+<ins>Fetch Desserts</ins> : /c=Dessert
 ```
 {
     "meals": [
@@ -28,7 +27,7 @@ Once the call has finished successfully, the user will be navigated to a list de
 }
 ```
 
-/lookup.php?i=52893
+<ins>Fetch Recipe for Specific Dessert</ins> : /lookup.php?i=52893
 ```
 {
     "meals": [
@@ -124,33 +123,41 @@ RESTful API:
 - Each favorited item is marked with a yellow star, which is also displayed in the Detail View when a Dessert is favorited.
 
 <br clear="left"/>
-
+<br clear="left"/>
 
 <img src="https://github.com/auza2/DessertRecipes/assets/17304405/96ff5fee-34a2-4d05-bae8-74beee24e1bd" width="200" align="left">
 
 #### Search Functionality
 
-I wanted to create a search functionality so that users would be able to search through all of the Desserts on the Dessert List and the two parts of the list have a filter on each one.
+- I implemented search functionality in the Dessert List view, allowing users to search through the list of desserts. By using a **@Query** property to fetch Dessert objects and a **@State** property to hold the search string, I enabled dynamic filtering of dessert names based on user input, while maintaining separate sections for favorites and non-favorites.
+
 <br clear="left"/>
 
 ### Recipe Detail View
 <img src="https://github.com/auza2/DessertRecipes/assets/17304405/e3ea563e-5cdc-4cad-98bf-39d1d8b5d610" width="200" align="left">
 
-This detail view shows the details of the full Recipe. Once a user taps on a Dessert on the dessert list we are navigated to the Detail View where we call the meal_id API and use Codable again to create a data object, Recipe, from the response. I used a Relationship so that each Dessert has a Recipe and vice versa so that we would be able to persist each Recipe and we would not need to make another API call if we were to open the Recipe again.
+#### Asynchronous API Calls
+- Made an **API call** using the ID from the tapped dessert with custom parameters defined using an enum for API calls.
+- Implemented **view reuse** for CacheAsyncImage, avoiding redundant image downloads and optimizing performance.
 
-Explain the Favorites Functionality on the top right.
+#### Dessert to Recipe Relationship
+- Established a relationship between each Dessert and its Recipe, enabling easy retrieval without searching.
+
+#### Favorites Functionality
+- Added a Favorite function in the top right corner, represented by an empty star. When tapped, the star fills, and the associated Dessert's isFavorite attribute is updated to true. This ensures that, upon navigating back to the Dessert List, the Dessert appears in the Favorited section.
+<br clear="left"/>
 <br clear="left"/>
 
-### Ingredient List with Tappable icon
 <img src="https://github.com/auza2/DessertRecipes/assets/17304405/0ebf245f-a391-4476-803a-6880cc89085b" width="200" align="left">
 
-As you can see in the example response API for the look up we get keys and values such as:
+#### Ingredient List with Tappable icon
+As seen in the example API response for the lookup, we receive key-value pairs such as:
 ```
 "strIngredient1": "Plain Flour",
 ...
 "strMeasure1": "120g",
 ```
-This was tricky since there had to be a decision on whether on not to use the Codable Protocol to just create a Recipe with a bunch of empty Ingredients. I was set on creating a functionality where I could tap on each Ingredient List item and persist the list so that the user would be able to go through each Recipe and tap on the Ingredients they already have and to be able to do that we would need to create a data object so that Swift Data can persist each Ingredient as it is checked off.
+- I used the **Codable** protocol to decode these key-value pairs and a subscript to extract each ingredient and measure. These were then used to create Ingredient objects, forming an array of ingredients within the Recipe object and establishing a *relationship*. This setup allows each ingredient in the list to be tappable, providing visual feedback when tapped.
 
 <br clear="left"/>
 
